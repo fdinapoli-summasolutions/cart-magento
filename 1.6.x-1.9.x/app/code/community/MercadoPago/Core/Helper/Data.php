@@ -54,10 +54,13 @@ class MercadoPago_Core_Helper_Data
     {
         $order = Mage::getModel('sales/order')->loadByIncrementId($notificationData["external_reference"]);
         $status = $notificationData['status'];
+        $statusDetail = $notificationData['status_detail'];
         $currentStatus = $order->getPayment()->getAdditionalInformation('status');
-        if ($status == $currentStatus && $order->getState() === Mage_Sales_Model_Order::STATE_COMPLETE) {
+        $currentStatusDetail = $order->getPayment()->getAdditionalInformation('status_detail');
+        if ($status == $currentStatus && $statusDetail == $currentStatusDetail) {
             $this->_statusUpdatedFlag = true;
         }
+
     }
 
     public function getApiInstance()
