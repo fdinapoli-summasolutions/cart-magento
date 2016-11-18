@@ -4,7 +4,7 @@ Feature: Notification received in MercadoPago Standard Checkout
 Background:
   Given User "test_user_58666377@testuser.com" "magento" exists
   And Setting Config "payment/mercadopago_standard/sandbox_mode" is "0"
-  And I wait for "15" seconds
+  And I wait for "5" seconds
   And I am logged in as "test_user_58666377@testuser.com" "magento"
   And I am on page "swiss-movement-sports-watch.html"
   And I press ".add-to-cart-buttons .btn-cart" element
@@ -32,7 +32,7 @@ Background:
     And I send the Notification
     And I wait for "3" seconds
 
-  @StandardNotification @TwoCardPayment
+  @TwoCardPayment
   Scenario: Pay the order with two cards, send the notification and check order state
     And I press ".init-step-link" input element
     And I wait for "5" seconds
@@ -68,18 +68,5 @@ Background:
     Then I go to the Order
     And I wait for "2" seconds
     Then I press ".order-totals-bottom .save" input element
-    Then Order must have credit memos
-    And Order must be in the correct state
-
-  @RefundViaNotification
-  Scenario: Made a refund via a notification, the order must be on the correct state
-    And I fill the iframe fields
-    And I press "#next" input element
-    And I switch to the site
-    And I should be on "/mercadopago/success"
-    And I send the Notification
-    And I wait for "3" seconds
-    Then I send the refund notification
-    And I wait for "2" seconds
     Then Order must have credit memos
     And Order must be in the correct state
